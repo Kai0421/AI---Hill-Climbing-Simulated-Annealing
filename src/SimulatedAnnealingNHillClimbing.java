@@ -1,13 +1,23 @@
 import java.util.Random;
 
-public class SimulatedAnnealing extends Components{
+public class SimulatedAnnealingNHillClimbing extends Components{
 
 	private double temp = Double.MAX_VALUE;
 	
-	public SimulatedAnnealing(){
+	public SimulatedAnnealingNHillClimbing(){
 		super(4, 200);
-		for(int i = 0; i < loopCount; i++)
-			simulateAnnealing();
+		
+		for (int i = 0; i < 9; i++) // this run 200 times 
+		{	
+			for(int x = 0; x < 1000; x++) // this run 1 times
+				simulateAnnealing();
+			
+			bestPaths.add(bestRun);
+		}
+		printArray(null, bestPaths, "Best Paths");
+		System.out.println("Best Path Length : " + bestPaths.size() + "\nBest Paths :" + bestPaths.get(findBestChildState(null, bestPaths)));
+		average();
+		averageBestPath();
 	}
 	
 	private void simulateAnnealing(){
@@ -29,10 +39,7 @@ public class SimulatedAnnealing extends Components{
 				setTrue = false;
 			}
 		}
-
-		printArray(null, bestPaths, "Best Paths");
-		System.out.println("Best Paths :" + bestPaths.get(findBestChildState(null, bestPaths))
-				+ "\n************************************RANDOM RESTART***************************************");// findBestChildState
+//		/System.out.println("\n************************************RANDOM RESTART***************************************");// findBestChildState
 	}
 	
 	private boolean acceptMove (int currentState, int proposedState, double temperature){
@@ -45,7 +52,7 @@ public class SimulatedAnnealing extends Components{
 		{
 			float  probOfMove = (float) Math.exp(-((proposedState - currentState) / temperature)); 
 			float randNum = (r.nextInt((10 - 0) + 1 ) + 0)/10.0f;
-			System.out.println("Probability of Move: " + probOfMove + "\t randNum :" + randNum);
+			//System.out.println("Probability of Move: " + probOfMove + "\t randNum :" + randNum);
 			if (randNum < probOfMove)	
 				return true;
 			else
@@ -58,6 +65,6 @@ public class SimulatedAnnealing extends Components{
 	}
 	
 	public static void main(String[] args){
-		new SimulatedAnnealing();
+		new SimulatedAnnealingNHillClimbing();
 	}
 }

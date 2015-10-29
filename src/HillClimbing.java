@@ -2,11 +2,19 @@
 public class HillClimbing extends Components{
 	
 	public HillClimbing(){
-		super(4, 200);
+		super(3, 700);
 		
-		//for (int i = 0; i < loopCount; i++) // this run 200 times 
-			for(int i = 0; i < loopCount; i++) // this run 1 times
+		for (int i = 0; i < 9; i++) // this run 200 times 
+		{	
+			for(int x = 0; x < loopCount; x++) // this run 1 times //22
 				hillClimb();
+			
+			bestPaths.add(bestRun);
+		}
+		printArray(null, bestPaths, "Best Paths");
+		System.out.println("Best Path Length : " + bestPaths.size() + "\nBest Paths :" + bestPaths.get(findBestChildState(null, bestPaths)));
+		average();
+		averageBestPath();
 	}
 	
 	private void hillClimb(){
@@ -27,9 +35,7 @@ public class HillClimbing extends Components{
 				futureStatesCumulativeDistance();
 			}
 		}
-		printArray(null, bestPaths, "Best Paths");
-		System.out.println("Best Path Length : " + bestPaths.size() + "\nBest Paths :" + bestPaths.get(findBestChildState(null, bestPaths)) 
-				+ "\n************************************RANDOM RESTART***************************************");//findBestChildState
+		//System.out.println("\n************************************RANDOM RESTART***************************************");//findBestChildState
 	}
 
 	public static void main(String[] args){

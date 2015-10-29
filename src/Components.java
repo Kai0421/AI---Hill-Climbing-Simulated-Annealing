@@ -8,7 +8,7 @@ import java.util.Random;
 
 public class Components {
 
-	protected int xSize, ySize, parentCMValue, bestChildState, stateChangeVariable = 3, loopCount = 40;
+	protected int xSize, ySize, parentCMValue, bestChildState, stateChangeVariable = 3, loopCount = 40, bestRun = Integer.MAX_VALUE;
 	protected int[] childStateCumulativeDistance;
 	protected int[][] citiesMatrix_15 , childState;
 	protected ArrayList<Integer> currentState = new ArrayList<>(), bestPaths = new ArrayList<>();
@@ -25,13 +25,35 @@ public class Components {
 	}
 	
 	protected void comparingFinalState(int bestChild){
-		System.out.println("BEST PATH -------" + bestChild);
+		if(bestRun > bestChild)
+			bestRun = bestChild;			
+	}
+	
+	//In the best path list it average the average number between the numbers and put it in a list
+	//[i.e.] 423, 422, 214, 213 the average in the list is 423, (422+423)/2, (214+422+423)/3, (213+214+422+423)/4  
+	protected void averageBestPath(){
 		
-		if(bestPaths.size() <= 0)
-			bestPaths.add(bestChild);
-		else 			
-			if(bestPaths.get(bestPaths.size()-1) > bestChild)
-				bestPaths.add(bestChild);			
+		ArrayList<Integer> avgList = new ArrayList<>();
+		int avg = 0;
+		for(int i = 0; i < bestPaths.size(); i++)
+		{
+			if(i != 0)
+				for(int a = i; a > 0; a--)
+					avg += bestPaths.get(a);
+			else
+				avg = bestPaths.get(0);
+			avgList.add(avg /= i+1);
+		}
+		printArray(null, avgList, "AVERAGE LIST");
+	}
+	
+	//This method sums up the bestPath value and divided by the size of the list
+	protected void average(){
+		double avg = 0;
+		for(int i : bestPaths)
+			avg += i;
+		avg /= bestPaths.size();
+		System.out.println("Average Value is :" + avg);
 	}
 	
 	//Generate the first random state 
@@ -164,7 +186,6 @@ public class Components {
 		}
 		if(stateArray != null)
 		{
-			//printArray(stateArray, null, "DEBUG :!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 			for(int x = 0; x < xSize; x++)
 				if((x+1) < xSize)
 				{	
@@ -173,8 +194,6 @@ public class Components {
 				}
 			totalDistance+=citiesMatrix_15[stateArray[0]][stateArray[xSize-1]];
 		}
-		
-		//System.out.println("Total Distance =" + totalDistance);
 		return totalDistance;
 	}
 
