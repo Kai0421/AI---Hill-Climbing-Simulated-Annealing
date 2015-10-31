@@ -2,7 +2,7 @@
 public class HillClimbing extends Components{
 	
 	public HillClimbing(){
-		super(3, 700);
+		super(4, 1000);
 		
 		for (int i = 0; i < 9; i++) // this run 200 times 
 		{	

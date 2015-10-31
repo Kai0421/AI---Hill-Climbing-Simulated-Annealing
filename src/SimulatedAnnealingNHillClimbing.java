@@ -5,11 +5,11 @@ public class SimulatedAnnealingNHillClimbing extends Components{
 	private double temp = Double.MAX_VALUE;
 	
 	public SimulatedAnnealingNHillClimbing(){
-		super(4, 200);
+		super(3, 190);
 		
 		for (int i = 0; i < 9; i++) // this run 200 times 
 		{	
-			for(int x = 0; x < 1000; x++) // this run 1 times
+			for(int x = 0; x < loopCount; x++) // this run 1 times
 				simulateAnnealing();
 			
 			bestPaths.add(bestRun);
